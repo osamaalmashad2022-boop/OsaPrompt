@@ -1,0 +1,6 @@
+@echo off
+title Project Launcher
+echo Starting the Project...
+echo Please wait while the server starts...
+node server.js
+pause

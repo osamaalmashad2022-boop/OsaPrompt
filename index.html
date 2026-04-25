@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OsaPrompt | إتقان ChatGPT</title>
+    <meta name="description"
+        content="رحلتك لاحتراف الذكاء الاصطناعي التوليدي - تعلم ChatGPT بأسلوب تفاعلي مبهر مع اختبارات وشهادة إتمام">
+    
+    <!-- Open Graph / Social Media Meta Tags -->
+    <meta property="og:title" content="OsaPrompt | إتقان ChatGPT">
+    <meta property="og:description" content="رحلة تعليمية تفاعلية لاحتراف الذكاء الاصطناعي التوليدي مع أسامة">
+    <meta property="og:image" content="https://osamai-academy.com/assets/osamai_logo.png">
+    <meta property="og:url" content="https://osamai-academy.com">
+    <meta property="og:type" content="website">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="OsaPrompt | إتقان ChatGPT">
+    <meta name="twitter:description" content="رحلة تعليمية تفاعلية لاحتراف الذكاء الاصطناعي التوليدي مع أسامة">
+    <meta name="twitter:image" content="https://osamai-academy.com/assets/osamai_logo.png">
+    
+    <link rel="icon" type="image/png" href="assets/osamai_logo.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Tajawal:wght@300;400;500;700;800;900&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body data-theme="dark">
+    <canvas id="neon-canvas"></canvas>
+
+    <!-- ===== NAVBAR ===== -->
+    <nav class="navbar" id="navbar">
+        <div class="nav-container">
+            <a href="#" class="nav-logo">
+                <img src="assets/osamai_logo.png" alt="OsamAI Logo" id="navbar-logo" style="height: 35px; border-radius: 50%; border: 2px solid var(--accent); cursor: pointer; transition: transform 0.3s;" onmouseover="this.style.transform='scale(1.1)'" onmouseout="this.style.transform='scale(1)'">
+                <span class="logo-text" style="direction: ltr;">Osa<span class="logo-highlight">Prompt</span></span>
+            </a>
+            <ul class="nav-links" id="nav-links">
+                <li><a href="#hero" class="nav-link active">الرئيسية</a></li>
+                <li><a href="#features" class="nav-link">المميزات</a></li>
+                <li><a href="#modules" class="nav-link">المحتوى</a></li>
+                <li><a href="#team" class="nav-link">الفريق</a></li>
+            </ul>
+            <div class="nav-actions">
+                <button class="theme-toggle" id="theme-toggle" title="تبديل المظهر" aria-label="Toggle theme">
+                    <span class="theme-icon-dark">☀️</span>
+                    <span class="theme-icon-light">🌙</span>
+                </button>
+                <a href="login.html" class="nav-cta" style="background: transparent; border: 1px solid var(--accent); margin-left: 10px; text-decoration: none; display: flex; align-items: center; justify-content: center;">تسجيل الدخول</a>
+                <button class="nav-cta" id="nav-start-btn">ابدأ الآن</button>
+                <button class="mobile-menu-btn" id="mobile-menu-btn" aria-label="القائمة">
+                    <span></span><span></span><span></span>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- ===== HERO SECTION ===== -->
+    <section class="hero" id="hero">
+        <div class="hero-bg-orbs">
+            <div class="orb orb-1"></div>
+            <div class="orb orb-2"></div>
+            <div class="orb orb-3"></div>
+        </div>
+        <div class="hero-content">
+            <div class="hero-badge animate-on-scroll">
+                <span class="badge-dot"></span>
+                رحلة تعليمية تفاعلية
+            </div>
+            <h1 class="hero-title animate-on-scroll">
+                <span class="title-line">أتقن</span>
+                <span class="title-line glow-text">ChatGPT</span>
+                <span class="title-line">باحترافية</span>
+            </h1>
+            <p class="hero-subtitle animate-on-scroll">
+                رحلة تعليمية شاملة لاحتراف الذكاء الاصطناعي التوليدي — من الصفر إلى الاحتراف مع تطبيقات عملية واختبارات
+                تفاعلية
+            </p>
+            <div class="hero-actions animate-on-scroll">
+                <button class="btn-primary btn-glow" id="hero-start-btn">
+                    <span>ابدأ رحلتك</span>
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M19 12H5M12 19l-7-7 7-7" />
+                    </svg>
+                </button>
+                <a href="#modules" class="btn-secondary">
+                    <span>استكشف المحتوى</span>
+                </a>
+            </div>
+        </div>
+        <div class="scroll-indicator">
+            <div class="mouse">
+                <div class="wheel"></div>
+            </div>
+            <span>اسحب للأسفل</span>
+        </div>
+    </section>
+
+    <!-- ===== STATS BAR ===== -->
+    <section class="stats-bar" id="stats-bar">
+        <div class="container">
+            <div class="hero-stats animate-on-scroll">
+                <div class="stat-item">
+                    <span class="stat-number" data-target="4">0</span>
+                    <span class="stat-label">وحدات تعليمية</span>
+                </div>
+                <div class="stat-divider"></div>
+                <div class="stat-item">
+                    <span class="stat-number" data-target="10">0</span>
+                    <span class="stat-label">اختبار تفاعلي</span>
+                </div>
+                <div class="stat-divider"></div>
+                <div class="stat-item">
+                    <span class="stat-number" data-target="1">0</span>
+                    <span class="stat-label">شهادة إتمام</span>
+                </div>
+                <div class="stat-divider"></div>
+                <div class="stat-item">
+                    <span class="stat-number" data-target="100">0</span>
+                    <span class="stat-label-suffix">%</span>
+                    <span class="stat-label">مجاني بالكامل</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== FEATURES SECTION ===== -->
+    <section class="features-section" id="features">
+        <div class="container">
+            <div class="section-header animate-on-scroll">
+                <span class="section-tag">لماذا تختارنا</span>
+                <h2 class="section-title">تجربة تعليمية <span class="gradient-text">لا مثيل لها</span></h2>
+                <p class="section-desc">صُممت هذه الدورة بعناية فائقة لتوفير أفضل تجربة تعلم تفاعلية</p>
+            </div>
+            <div class="features-grid">
+                <div class="feature-card animate-on-scroll" data-delay="0">
+                    <div class="feature-icon-wrap">
+                        <div class="feature-icon">🧠</div>
+                    </div>
+                    <h3>تعلم تفاعلي</h3>
+                    <p>محتوى غني بالأمثلة العملية والتطبيقات الحقيقية مع شرح مبسط</p>
+                </div>
+                <div class="feature-card animate-on-scroll" data-delay="100">
+                    <div class="feature-icon-wrap">
+                        <div class="feature-icon">📝</div>
+                    </div>
+                    <h3>اختبارات ذكية</h3>
+                    <p>اختبارات قبلية وبعدية لقياس مستوى تقدمك بدقة</p>
+                </div>
+                <div class="feature-card animate-on-scroll" data-delay="200">
+                    <div class="feature-icon-wrap">
+                        <div class="feature-icon">🏆</div>
+                    </div>
+                    <h3>شهادة إتمام</h3>
+                    <p>احصل على شهادة احترافية عند إتمامك الدورة بنجاح</p>
+                </div>
+                <div class="feature-card animate-on-scroll" data-delay="300">
+                    <div class="feature-icon-wrap">
+                        <div class="feature-icon">🤖</div>
+                    </div>
+                    <h3>مدرب AI</h3>
+                    <p>مدرب ذكاء اصطناعي مدمج يقيّم طلباتك ويقدم نصائح فورية</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== MODULES SECTION ===== -->
+    <section class="modules-section" id="modules">
+        <div class="container">
+            <div class="section-header animate-on-scroll">
+                <span class="section-tag">المحتوى التعليمي</span>
+                <h2 class="section-title">رحلتك خطوة <span class="gradient-text">بخطوة</span></h2>
+                <p class="section-desc">أربع وحدات تعليمية مصممة بعناية تأخذك من المبتدئ إلى المحترف</p>
+            </div>
+            <div class="modules-grid" id="modules-container">
+                <!-- Modules will be injected here by script.js -->
+            </div>
+            <div class="modules-cta animate-on-scroll">
+                <button class="btn-primary btn-glow" id="modules-start-btn">
+                    <span>ابدأ الكورس الآن</span>
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M19 12H5M12 19l-7-7 7-7" />
+                    </svg>
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== TEAM SECTION ===== -->
+    <section class="team-section" id="team">
+        <div class="container">
+            <div class="section-header animate-on-scroll">
+                <span class="section-tag">من نحن</span>
+                <h2 class="section-title">فريق <span class="gradient-text">العمل</span></h2>
+                <p class="section-desc">فريق متميز من المطورين والمصممين عملوا على إخراج هذه التجربة</p>
+            </div>
+            <div class="team-grid">
+                <div class="team-card animate-on-scroll" data-delay="0">
+                    <div class="team-avatar">👩‍💻</div>
+                    <h4>منة محمد الكفافي</h4>
+                </div>
+                <div class="team-card animate-on-scroll" data-delay="50">
+                    <div class="team-avatar">👩‍💻</div>
+                    <h4>روفانا ناصر حسان</h4>
+                </div>
+                <div class="team-card animate-on-scroll" data-delay="100">
+                    <div class="team-avatar">👩‍💻</div>
+                    <h4>روان عمرو الجندي</h4>
+                </div>
+                <div class="team-card animate-on-scroll" data-delay="150">
+                    <div class="team-avatar">👩‍💻</div>
+                    <h4>آية احمد حسين البادى</h4>
+                </div>
+                <div class="team-card animate-on-scroll" data-delay="200">
+                    <div class="team-avatar">👨‍💻</div>
+                    <h4>أحمد عصام الأسود</h4>
+                </div>
+                <div class="team-card animate-on-scroll" data-delay="250">
+                    <div class="team-avatar">👨‍💻</div>
+                    <h4>أسامة أيمن المشد</h4>
+                </div>
+                <div class="team-card animate-on-scroll" data-delay="300">
+                    <div class="team-avatar">👨‍💻</div>
+                    <h4>أحمد طارق المشد</h4>
+                </div>
+                <div class="team-card animate-on-scroll" data-delay="350">
+                    <div class="team-avatar">👩‍💻</div>
+                    <h4>اية الله مجدي الذيدي</h4>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- ===== FOOTER ===== -->
+    <footer class="site-footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-brand">
+                    <img src="assets/osamai_logo.png" alt="OsamAI Logo" style="height: 30px; border-radius: 50%;">
+                    <span style="direction: ltr;">OsaPrompt Academy</span>
+                </div>
+                <p class="footer-text">رحلة تعليمية تفاعلية لاحتراف الذكاء الاصطناعي التوليدي</p>
+                
+                <div class="footer-social">
+                    <a href="https://wa.me/201011868045" target="_blank" class="social-icon" title="واتساب">
+                        <svg xmlns="http://www.svg.org/2000/svg" viewBox="0 0 448 512" fill="currentColor" width="24" height="24"><path d="M380.9 97.1C339 55.1 283.2 32 223.9 32c-122.4 0-222 99.6-222 222 0 39.1 10.2 77.3 29.6 111L0 480l117.7-30.9c32.4 17.7 68.9 27 106.1 27h.1c122.3 0 224.1-99.6 224.1-222 0-59.3-25.2-115-67.1-157zm-157 341.6c-33.2 0-65.7-8.9-94-25.7l-6.7-4-69.8 18.3L72 359.2l-4.4-7c-18.5-29.4-28.2-63.3-28.2-98.2 0-101.7 82.8-184.5 184.6-184.5 49.3 0 95.6 19.2 130.4 54.1 34.8 34.9 56.2 81.2 56.1 130.5 0 101.8-84.9 184.6-186.6 184.6zm101.2-138.2c-5.5-2.8-32.8-16.2-37.9-18-5.1-1.9-8.8-2.8-12.5 2.8-3.7 5.6-14.3 18-17.6 21.8-3.2 3.7-6.5 4.2-12 1.4-32.6-16.3-54-29.1-75.5-66-5.7-9.8 5.7-9.1 16.3-30.3 1.8-3.7 .9-6.9-.5-9.7-1.4-2.8-12.5-30.1-17.1-41.2-4.5-10.8-9.1-9.3-12.5-9.5-3.2-.2-6.9-.2-10.6-.2-3.7 0-9.7 1.4-14.8 6.9-5.1 5.6-19.4 19-19.4 46.3 0 27.3 19.9 53.7 22.6 57.4 2.8 3.7 39.1 59.7 94.8 83.8 35.2 15.2 49 16.5 66.6 13.9 10.7-1.6 32.8-13.4 37.4-26.4 4.6-13 4.6-24.1 3.2-26.4-1.3-2.5-5-3.9-10.5-6.6z"/></svg>
+                    </a>
+                    <a href="https://www.facebook.com/share/1HMxedGmGJ/" target="_blank" class="social-icon" title="فيسبوك">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="24" height="24"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"></path></svg>
+                    </a>
+                    <a href="https://www.linkedin.com/in/osama-almashad-9324b3340?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app" target="_blank" class="social-icon" title="لينكدإن">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="24" height="24"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path><rect x="2" y="9" width="4" height="12"></rect><circle cx="4" cy="4" r="2"></circle></svg>
+                    </a>
+                    <a href="https://youtube.com/@osospiracy5468?si=_SKB4Z-yZtEt14L-" target="_blank" class="social-icon" title="يوتيوب">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="24" height="24"><path d="M22.54 6.42a2.78 2.78 0 0 0-1.94-2C18.88 4 12 4 12 4s-6.88 0-8.6.46a2.78 2.78 0 0 0-1.94 2A29 29 0 0 0 1 11.75a29 29 0 0 0 .46 5.33 2.78 2.78 0 0 0 1.94 2c1.72.46 8.6.46 8.6.46s6.88 0 8.6-.46a2.78 2.78 0 0 0 1.94-2 29 29 0 0 0 .46-5.33 29 29 0 0 0-.46-5.33z"></path><polygon points="9.75 15.02 15.5 11.75 9.75 8.48 9.75 15.02"></polygon></svg>
+                    </a>
+                </div>
+                
+                <div class="footer-divider"></div>
+                <p class="footer-copy">© 2026 Micro Skill Center — جميع الحقوق محفوظة</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- ===== MODALS (Preserved) ===== -->
+
+    <!-- Module Content Modal -->
+    <div id="module-modal" class="modal hidden">
+        <div class="modal-content glass-panel">
+            <button class="close-btn">&times;</button>
+            <div class="modal-body" id="modal-body">
+                <!-- Content goes here -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Quiz Modal -->
+    <div id="quiz-modal" class="modal hidden">
+        <div class="modal-content glass-panel quiz-panel">
+            <h2 id="quiz-title">اختبار</h2>
+            <div id="quiz-question-container"></div>
+            <button id="next-question-btn" class="action-btn hidden">التالي</button>
+        </div>
+    </div>
+
+    <!-- Certificate Modal -->
+    <div id="certificate-modal" class="modal hidden">
+        <div class="modal-content certificate-panel">
+            <button class="close-btn" id="close-cert">&times;</button>
+            <div id="certificate-display" class="certificate">
+                <div class="cert-header-logo">Micro Skill Center</div>
+                <div class="cert-title">شهادة إتمام</div>
+                <div class="cert-subtitle">Certificate of Completion</div>
+
+                <div class="cert-body">
+                    <p>يشهد مركز Micro Skill بأن المتدرب</p>
+                    <div id="cert-name" class="cert-student-name">اسم الطالب</div>
+                    <p>قد أتم بنجاح وتميز الدورة التدريبية</p>
+                    <div class="cert-course-title">إتقان ChatGPT</div>
+                    <div class="cert-score-box">
+                        الدرجة النهائية: <span id="cert-score">100%</span>
+                    </div>
+                </div>
+
+                <div class="cert-footer">
+                    <div class="cert-date-box">
+                        <p>التاريخ</p>
+                        <p id="cert-date" style="font-weight: bold; color: #1a1a1a;">-</p>
+                    </div>
+                    <div class="cert-signature">
+                        <div class="signature-img">Osama Almashad</div>
+                        <div class="signature-line"></div>
+                        <div class="signature-title">المدير العام</div>
+                    </div>
+                </div>
+            </div>
+            <button id="print-btn" class="action-btn">طباعة الشهادة</button>
+        </div>
+    </div>
+
+    <!-- Name Input Modal (Start) -->
+    <div id="name-modal" class="modal hidden">
+        <div class="modal-content glass-panel center-content">
+            <div class="name-modal-icon">🚀</div>
+            <h2>مرحباً بك في رحلة التعلم</h2>
+            <p>الرجاء إدخال اسمك للبدء ولإصدار الشهادة لاحقاً</p>
+            <input type="text" id="user-name-input" placeholder="اسمك الكريم">
+            <button id="start-course-btn" class="action-btn">ابدأ الرحلة</button>
+        </div>
+    </div>
+
+    <!-- Chat Simulator Widget -->
+    <div id="chat-widget" class="chat-widget collapsed">
+        <div class="chat-header" id="chat-toggle">
+            <span>مدرب ChatGPT 🤖</span>
+            <button class="toggle-btn">▲</button>
+        </div>
+        <div class="chat-body">
+            <div class="messages-area" id="chat-messages">
+                <div class="message system">
+                    مرحباً! أنا مدربك الشخصي. جرب كتابة طلب (Prompt) وسأقوم بتقييمه لك!
+                </div>
+            </div>
+            <div class="input-area">
+                <input type="text" id="chat-input" placeholder="اكتب طلبك هنا...">
+                <button id="send-btn">إرسال</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Lightbox Modal for Logo -->
+    <div id="lightbox-modal" class="modal hidden">
+        <button class="close-btn" style="position: fixed; top: 20px; right: 30px; color: white; font-size: 3rem; z-index: 2001; background: rgba(0,0,0,0.5); width: 50px; height: 50px; border-radius: 50%; display: flex; justify-content: center; align-items: center; border: 2px solid var(--accent); cursor: pointer;">&times;</button>
+        <div class="modal-content" style="background: transparent; border: none; box-shadow: none; display: flex; justify-content: center; align-items: center; padding: 0;">
+            <img src="assets/osamai_logo.png" alt="Logo Zoomed" style="max-width: 90vw; max-height: 80vh; border-radius: 50%; box-shadow: 0 0 50px rgba(0, 243, 255, 0.4); animation: pulse-glow 3s infinite alternate;">
+        </div>
+    </div>
+
+    <script src="data.js"></script>
+    <script src="background.js"></script>
+    <script src="script.js"></script>
+</body>
+
+</html>
