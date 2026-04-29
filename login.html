@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>تسجيل الدخول | Prompt Engineering</title>
+    <link rel="icon" type="image/png" href="assets/osamai_logo.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Tajawal:wght@300;400;500;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="base.css">
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            overflow: hidden;
+            margin: 0;
+            background-color: var(--bg-primary);
+        }
+        #neon-canvas {
+            position: fixed;
+            inset: 0;
+            z-index: 0;
+            pointer-events: none;
+        }
+        .login-container {
+            position: relative;
+            z-index: 10;
+            width: 100%;
+            max-width: 400px;
+            padding: 20px;
+        }
+        .login-card {
+            background: var(--glass);
+            border: 1px solid var(--glass-b);
+            border-radius: 20px;
+            padding: 40px 30px;
+            text-align: center;
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            animation: float 6s ease-in-out infinite;
+        }
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+            100% { transform: translateY(0px); }
+        }
+        .login-logo {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            margin-bottom: 20px;
+            border: 2px solid var(--accent);
+            box-shadow: 0 0 20px var(--accent-glow);
+            animation: pulse-glow 3s infinite alternate;
+        }
+        .login-title {
+            color: var(--text-1);
+            font-size: 1.8rem;
+            margin-bottom: 10px;
+        }
+        .login-subtitle {
+            color: var(--text-2);
+            font-size: 0.9rem;
+            margin-bottom: 30px;
+        }
+        .form-group {
+            margin-bottom: 20px;
+            text-align: right;
+        }
+        .form-label {
+            display: block;
+            margin-bottom: 8px;
+            color: var(--text-2);
+            font-size: 0.9rem;
+        }
+        .form-input {
+            width: 100%;
+            padding: 12px 15px;
+            background: rgba(0, 0, 0, 0.2);
+            border: 1px solid var(--glass-b);
+            border-radius: 10px;
+            color: var(--text-1);
+            font-family: 'Tajawal', sans-serif;
+            transition: all 0.3s ease;
+            box-sizing: border-box;
+        }
+        .form-input:focus {
+            outline: none;
+            border-color: var(--accent);
+            box-shadow: 0 0 10px var(--accent-glow);
+        }
+        .login-btn {
+            width: 100%;
+            padding: 12px;
+            border-radius: 10px;
+            margin-top: 10px;
+            font-size: 1.1rem;
+            cursor: pointer;
+            border: none;
+            font-family: 'Tajawal', sans-serif;
+            font-weight: 700;
+        }
+        .error-msg {
+            color: #ff4d4d;
+            font-size: 0.9rem;
+            margin-top: 15px;
+            display: none;
+            background: rgba(255, 77, 77, 0.1);
+            padding: 10px;
+            border-radius: 8px;
+            border: 1px solid rgba(255, 77, 77, 0.3);
+        }
+        .back-link {
+            display: inline-block;
+            margin-top: 25px;
+            color: var(--text-2);
+            text-decoration: none;
+            font-size: 0.9rem;
+            transition: color 0.3s;
+        }
+        .back-link:hover {
+            color: var(--accent);
+        }
+    </style>
+</head>
+<body data-theme="dark">
+    <canvas id="neon-canvas"></canvas>
+    
+    <div class="login-container">
+        <div class="login-card">
+            <img src="assets/osamai_logo.png" alt="OsaPrompt Logo" class="login-logo">
+            <h2 class="login-title">مرحباً بك مجدداً</h2>
+            <p class="login-subtitle">سجل دخولك لمتابعة رحلتك في إتقان الذكاء الاصطناعي</p>
+            
+            <form id="login-form">
+                <div class="form-group">
+                    <label class="form-label" for="username">اسم المستخدم</label>
+                    <input type="text" id="username" class="form-input" placeholder="أدخل اسم المستخدم" required autocomplete="off">
+                </div>
+                <div class="form-group">
+                    <label class="form-label" for="password">كلمة المرور</label>
+                    <input type="password" id="password" class="form-input" placeholder="أدخل كلمة المرور" required>
+                </div>
+                <button type="submit" class="btn-primary btn-glow login-btn">دخول</button>
+                <div class="error-msg" id="error-msg">بيانات الدخول غير صحيحة!</div>
+            </form>
+            
+            <a href="index.html" class="back-link">العودة كزائر (تخطي التسجيل)</a>
+        </div>
+    </div>
+
+    <script src="background.js"></script>
+    <script>
+        // Init Background particles
+        const canvas = document.getElementById('neon-canvas');
+        if(canvas && typeof initBackground === 'function') {
+            // background.js handles the canvas
+        }
+
+        document.getElementById('login-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const user = document.getElementById('username').value.trim();
+            const pass = document.getElementById('password').value;
+            const errorMsg = document.getElementById('error-msg');
+            
+            if(user === 'osama' && pass === '123') {
+                errorMsg.style.display = 'none';
+                localStorage.setItem('isLoggedIn', 'true');
+                window.location.href = 'index.html';
+            } else {
+                errorMsg.style.display = 'block';
+            }
+        });
+    </script>
+</body>
+</html>
