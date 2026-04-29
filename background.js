@@ -3,7 +3,8 @@ const ctx = canvas.getContext('2d');
 
 let width, height;
 let particles = [];
-const particleCount = 120;
+const isMobile = window.innerWidth <= 768 || 'ontouchstart' in window;
+const particleCount = isMobile ? 50 : 120;
 const mouse = { x: -1000, y: -1000 };
 
 function getTheme() {
@@ -27,10 +28,12 @@ function resize() {
 window.addEventListener('resize', resize);
 resize();
 
-window.addEventListener('mousemove', (e) => {
-    mouse.x = e.clientX;
-    mouse.y = e.clientY;
-});
+if (!isMobile) {
+    window.addEventListener('mousemove', (e) => {
+        mouse.x = e.clientX;
+        mouse.y = e.clientY;
+    });
+}
 
 class Particle {
     constructor() {

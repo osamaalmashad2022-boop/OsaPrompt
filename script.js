@@ -80,10 +80,26 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // Mobile menu
+    // Mobile menu with overlay and animation
+    const navOverlay = document.getElementById('nav-overlay');
     elements.mobileMenuBtn.addEventListener('click', () => {
-        elements.navLinks.classList.toggle('open');
+        const isOpen = elements.navLinks.classList.toggle('open');
+        elements.mobileMenuBtn.classList.toggle('active', isOpen);
+        if (navOverlay) navOverlay.classList.toggle('active', isOpen);
+        document.body.style.overflow = isOpen ? 'hidden' : '';
     });
+
+    function closeMobileMenu() {
+        elements.navLinks.classList.remove('open');
+        elements.mobileMenuBtn.classList.remove('active');
+        if (navOverlay) navOverlay.classList.remove('active');
+        document.body.style.overflow = '';
+    }
+
+    // Close menu on overlay click
+    if (navOverlay) {
+        navOverlay.addEventListener('click', closeMobileMenu);
+    }
 
     // Close modals
     document.querySelectorAll('.close-btn').forEach(btn => {
@@ -94,10 +110,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
     document.getElementById('print-btn').addEventListener('click', () => window.print());
 
-    // Smooth scroll for nav links
+    // Smooth scroll for nav links - close mobile menu
     document.querySelectorAll('.nav-link').forEach(link => {
         link.addEventListener('click', (e) => {
-            elements.navLinks.classList.remove('open');
+            closeMobileMenu();
         });
     });
 
@@ -372,3 +388,149 @@ function showCertificate() {
     elements.certDate.textContent = new Date().toLocaleDateString('ar-EG');
     elements.certModal.classList.remove('hidden');
 }
+
+// ===== HERO TYPEWRITER EFFECT =====
+(function() {
+    const titleEl = document.getElementById('hero-typed-title');
+    if (!titleEl) return;
+
+    const lines = [
+        { text: 'أتقن', className: 'title-line' },
+        { text: 'ChatGPT', className: 'title-line glow-text' },
+        { text: 'باحترافية', className: 'title-line' }
+    ];
+
+    const TYPE_SPEED = 90;
+    const LINE_DELAY = 300;
+    const START_DELAY = 600;
+
+    function typeText(text, targetSpan, speed, onDone) {
+        let idx = 0;
+        const iv = setInterval(() => {
+            if (idx < text.length) {
+                targetSpan.textContent += text[idx];
+                idx++;
+            } else {
+                clearInterval(iv);
+                if (onDone) onDone();
+            }
+        }, speed);
+    }
+
+    // Create cursor
+    const cursor = document.createElement('span');
+    cursor.className = 'hero-title-cursor';
+    titleEl.appendChild(cursor);
+
+    function typeLine(index) {
+        if (index >= lines.length) {
+            // Done — fade cursor after a moment
+            setTimeout(() => {
+                cursor.style.transition = 'opacity 0.5s ease';
+                cursor.style.opacity = '0';
+            }, 1500);
+            return;
+        }
+
+        const lineData = lines[index];
+        const span = document.createElement('span');
+        span.className = lineData.className;
+        titleEl.insertBefore(span, cursor);
+
+        typeText(lineData.text, span, TYPE_SPEED, () => {
+            // Add line break before cursor (except last line)
+            if (index < lines.length - 1) {
+                titleEl.insertBefore(document.createElement('br'), cursor);
+            }
+            setTimeout(() => typeLine(index + 1), LINE_DELAY);
+        });
+    }
+
+    // Start typing after delay
+    setTimeout(() => typeLine(0), START_DELAY);
+})();
+
+// ===== SECTION TITLES TYPEWRITER EFFECT =====
+(function() {
+    const TYPE_SPEED = 50;
+
+    function typeInto(el, segments, onDone) {
+        let segIdx = 0;
+        function typeSegment() {
+            if (segIdx >= segments.length) {
+                if (onDone) onDone();
+                return;
+            }
+            const seg = segments[segIdx];
+            const span = document.createElement('span');
+            if (seg.className) span.className = seg.className;
+            // Insert before cursor
+            const cursor = el.querySelector('.section-title-cursor');
+            if (cursor) el.insertBefore(span, cursor);
+            else el.appendChild(span);
+
+            let charIdx = 0;
+            const iv = setInterval(() => {
+                if (charIdx < seg.text.length) {
+                    span.textContent += seg.text[charIdx];
+                    charIdx++;
+                } else {
+                    clearInterval(iv);
+                    segIdx++;
+                    typeSegment();
+                }
+            }, TYPE_SPEED);
+        }
+        typeSegment();
+    }
+
+    // Parse each section-title into segments
+    const titles = document.querySelectorAll('.section-title');
+    const titleData = [];
+
+    titles.forEach(title => {
+        const segments = [];
+        title.childNodes.forEach(node => {
+            if (node.nodeType === Node.TEXT_NODE) {
+                const text = node.textContent;
+                if (text.trim()) segments.push({ text: text, className: '' });
+            } else if (node.nodeType === Node.ELEMENT_NODE && node.classList.contains('gradient-text')) {
+                segments.push({ text: node.textContent, className: 'gradient-text' });
+            }
+        });
+        titleData.push({ el: title, segments: segments, typed: false });
+        // Empty the title
+        title.innerHTML = '';
+        // Add cursor
+        const cursor = document.createElement('span');
+        cursor.className = 'section-title-cursor hero-title-cursor';
+        cursor.style.opacity = '0';
+        title.appendChild(cursor);
+    });
+
+    // Observe each title
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                const data = titleData.find(d => d.el === entry.target);
+                if (data && !data.typed) {
+                    data.typed = true;
+                    const cursor = data.el.querySelector('.section-title-cursor');
+                    if (cursor) cursor.style.opacity = '1';
+                    typeInto(data.el, data.segments, () => {
+                        // Fade cursor after done
+                        setTimeout(() => {
+                            if (cursor) {
+                                cursor.style.transition = 'opacity 0.5s ease';
+                                cursor.style.opacity = '0';
+                            }
+                        }, 1200);
+                    });
+                    observer.unobserve(entry.target);
+                }
+            }
+        });
+    }, { threshold: 0.5 });
+
+    titleData.forEach(d => observer.observe(d.el));
+})();
