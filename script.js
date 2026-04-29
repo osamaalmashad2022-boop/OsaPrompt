@@ -121,7 +121,7 @@ document.addEventListener('DOMContentLoaded', () => {
     window.addEventListener('scroll', handleScroll);
 
     // Scroll animations
-    initScrollAnimations();
+    initGSAPAnimations();
 
     // Counter animation
     initCounters();
@@ -145,17 +145,108 @@ function handleScroll() {
 }
 
 // ===== SCROLL ANIMATIONS =====
-function initScrollAnimations() {
-    const observer = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                const delay = entry.target.getAttribute('data-delay') || 0;
-                setTimeout(() => entry.target.classList.add('visible'), parseInt(delay));
-            }
-        });
-    }, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
+function initGSAPAnimations() {
+    // 1. Scroll Progress Bar
+    gsap.to("#scroll-progress", {
+        width: "100%",
+        ease: "none",
+        scrollTrigger: {
+            trigger: document.body,
+            start: "top top",
+            end: "bottom bottom",
+            scrub: 0.3
+        }
+    });
 
-    document.querySelectorAll('.animate-on-scroll').forEach(el => observer.observe(el));
+    // 2. Hero Background Orbs Parallax
+    gsap.to(".hero-bg-orbs .orb-1", {
+        yPercent: 50,
+        ease: "none",
+        scrollTrigger: { trigger: ".hero", start: "top top", end: "bottom top", scrub: 1 }
+    });
+    gsap.to(".hero-bg-orbs .orb-2", {
+        yPercent: -50,
+        ease: "none",
+        scrollTrigger: { trigger: ".hero", start: "top top", end: "bottom top", scrub: 1.5 }
+    });
+    gsap.to(".hero-bg-orbs .orb-3", {
+        yPercent: 30,
+        xPercent: 20,
+        ease: "none",
+        scrollTrigger: { trigger: ".hero", start: "top top", end: "bottom top", scrub: 2 }
+    });
+
+    // 3. Features Grid 3D Reveal
+    gsap.fromTo(".feature-card", 
+        { y: 100, rotationX: -15, opacity: 0, autoAlpha: 0 },
+        {
+            y: 0,
+            rotationX: 0,
+            opacity: 1,
+            autoAlpha: 1,
+            duration: 0.8,
+            stagger: 0.15,
+            ease: "back.out(1.2)",
+            scrollTrigger: {
+                trigger: ".features-grid",
+                start: "top 85%"
+            }
+        }
+    );
+
+    // 4. Team Grid Pop-up
+    gsap.fromTo(".team-card", 
+        { scale: 0.8, y: 50, opacity: 0, autoAlpha: 0 },
+        {
+            scale: 1,
+            y: 0,
+            opacity: 1,
+            autoAlpha: 1,
+            duration: 0.6,
+            stagger: 0.1,
+            ease: "elastic.out(1, 0.7)",
+            scrollTrigger: {
+                trigger: ".team-grid",
+                start: "top 85%"
+            }
+        }
+    );
+
+    // 5. Supervisors Reveal
+    gsap.fromTo(".supervisor-card", 
+        { y: 40, opacity: 0, autoAlpha: 0 },
+        {
+            y: 0,
+            opacity: 1,
+            autoAlpha: 1,
+            duration: 0.6,
+            stagger: 0.2,
+            ease: "power2.out",
+            scrollTrigger: {
+                trigger: ".supervisors-grid",
+                start: "top 90%"
+            }
+        }
+    );
+
+    // 6. Generic animate-on-scroll elements
+    const genericElements = document.querySelectorAll('.animate-on-scroll:not(.feature-card):not(.team-card):not(.supervisor-card):not(.module-card)');
+    genericElements.forEach((el) => {
+        gsap.fromTo(el, 
+            { y: 30, opacity: 0, autoAlpha: 0 },
+            {
+                y: 0,
+                opacity: 1,
+                autoAlpha: 1,
+                duration: 0.6,
+                ease: "power2.out",
+                scrollTrigger: {
+                    trigger: el,
+                    start: "top 90%"
+                }
+            }
+        );
+    });
 }
 
 // ===== COUNTER ANIMATION =====
@@ -221,8 +312,7 @@ function renderModules() {
     elements.modulesContainer.innerHTML = '';
     courseData.modules.forEach((module, index) => {
         const card = document.createElement('div');
-        card.className = 'module-card animate-on-scroll visible';
-        card.style.animationDelay = `${index * 0.1}s`;
+        card.className = 'module-card animate-on-scroll';
         card.innerHTML = `
             <div class="card-number">0${module.id}</div>
             <h3 class="card-title">${module.title}</h3>
@@ -233,7 +323,7 @@ function renderModules() {
     });
 
     const examCard = document.createElement('div');
-    examCard.className = 'module-card animate-on-scroll visible';
+    examCard.className = 'module-card animate-on-scroll';
     examCard.innerHTML = `
         <div class="card-number">🏆</div>
         <h3 class="card-title">الاختبار النهائي</h3>
@@ -242,8 +332,33 @@ function renderModules() {
     examCard.addEventListener('click', () => startQuiz('final', courseData.finalExam, "الاختبار النهائي"));
     elements.modulesContainer.appendChild(examCard);
 
+    // After injecting modules, initialize their GSAP animations
+    if (typeof gsap !== 'undefined' && typeof ScrollTrigger !== 'undefined') {
+        const moduleCards = document.querySelectorAll(".module-card");
+        moduleCards.forEach((card, i) => {
+            const xDir = i % 2 === 0 ? 50 : -50; 
+            gsap.fromTo(card, 
+                { x: xDir, opacity: 0, autoAlpha: 0 },
+                {
+                    x: 0,
+                    opacity: 1,
+                    autoAlpha: 1,
+                    duration: 0.6,
+                    ease: "power2.out",
+                    scrollTrigger: {
+                        trigger: card,
+                        start: "top 85%"
+                    }
+                }
+            );
+        });
+        ScrollTrigger.refresh();
+    }
+
     // Scroll to modules section
     document.getElementById('modules').scrollIntoView({ behavior: 'smooth' });
+
+    if (window.initModuleTilt) window.initModuleTilt();
 }
 
 function openModule(module) {
@@ -534,3 +649,56 @@ function showCertificate() {
 
     titleData.forEach(d => observer.observe(d.el));
 })();
+
+// ===== WOW EFFECTS (Cursor & Tilt) =====
+document.addEventListener('DOMContentLoaded', () => {
+    // 1. Custom Cursor Glow Tracking
+    const cursorGlow = document.getElementById('cursor-glow');
+    if (cursorGlow) {
+        document.addEventListener('mousemove', (e) => {
+            // Using requestAnimationFrame for smooth performance
+            requestAnimationFrame(() => {
+                cursorGlow.style.left = e.clientX + 'px';
+                cursorGlow.style.top = e.clientY + 'px';
+            });
+        });
+
+        // Expand glow when hovering over clickable elements
+        const clickables = document.querySelectorAll('a, button, .feature-card, .team-card, .module-card');
+        clickables.forEach(el => {
+            el.addEventListener('mouseenter', () => {
+                cursorGlow.style.width = '800px';
+                cursorGlow.style.height = '800px';
+                cursorGlow.style.background = 'radial-gradient(circle, rgba(0, 243, 255, 0.12) 0%, rgba(188, 19, 254, 0.05) 40%, transparent 70%)';
+            });
+            el.addEventListener('mouseleave', () => {
+                cursorGlow.style.width = '600px';
+                cursorGlow.style.height = '600px';
+                cursorGlow.style.background = 'radial-gradient(circle, rgba(0, 243, 255, 0.08) 0%, rgba(188, 19, 254, 0.03) 40%, transparent 70%)';
+            });
+        });
+    }
+
+    // 2. VanillaTilt 3D Initialization
+    if (typeof VanillaTilt !== 'undefined') {
+        VanillaTilt.init(document.querySelectorAll(".feature-card, .team-card, .supervisor-card"), {
+            max: 15,
+            speed: 400,
+            glare: true,
+            "max-glare": 0.2,
+            scale: 1.05
+        });
+        
+        // Modules are injected dynamically, so we need to tilt them after they render
+        // We'll expose a global function to init tilt on modules
+        window.initModuleTilt = () => {
+            VanillaTilt.init(document.querySelectorAll(".module-card"), {
+                max: 12,
+                speed: 400,
+                glare: true,
+                "max-glare": 0.2,
+                scale: 1.05
+            });
+        };
+    }
+});
